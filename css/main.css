@@ -1,0 +1,233 @@
+html {
+    height: 100%;
+}
+
+body {
+    color: #FFF;
+    height: 100%;
+}
+
+.player {
+    padding-bottom: 100px;
+    position: relative;
+    background: #14114bdb;
+    background-image: linear-gradient(to right, #14114bad , #e402802e);
+    max-width: 7000px;
+    margin: 0;
+    height: 100%; 
+}
+
+.control-wrapper {
+    height: 100px;
+    width: 100%;
+    background: #002284;
+    position: absolute;
+    bottom: 0px;
+    /* box-shadow: #7a3bb387 0px -6px 6px 0px; */
+}
+
+.logo {
+    width: 205px;
+}
+
+.control-section {
+    text-align: center;
+}
+
+.control-section a {
+    color: #FFF;
+    text-decoration: none;
+}
+
+.control-section {
+    font-size: 24px;
+}
+
+.control-section {
+    font-size: 24px;
+    margin-top: 25px;
+}
+
+.control-section .fa-play {
+    margin: 0 20px;
+}
+
+.control-section .fa-pause {
+    margin: 0 20px;
+}
+
+.search-section {
+    display: none;
+}
+
+.table th {
+    border-top: 0;
+}
+
+.list-section {
+    margin-top: 20px;
+}
+
+.progress-bar-container {
+    position: relative;
+    width: 100%;
+    height: 4px;
+    background: #FFF;
+    margin-top: 15px;
+}
+
+.progress-pointer {
+    height: 10px;
+    border-right: solid 4px #E40280;
+    background-image: linear-gradient(to right, #14114b , #E40280);
+    width: 0%;
+    max-width: 100%;
+    position: absolute;
+    left: 0px;
+    top: -3px;
+}
+
+.current-section {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.current-section h5 {
+    font-size: 18px;
+}
+
+.current-section h6 {
+    font-size: 14px;
+}
+
+.player::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: .4;
+    z-index: -1;
+    background: url('../assets/background.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #14114b;
+  }
+
+  .add-time {
+      font-size: 12px;
+      border: 2px solid #FFF;
+      border-radius: 100px;
+      padding: 10px;
+      background: #FFF;
+      color: #334cde;
+      position: relative;
+      top: -3px;
+      left: 10px;
+  }
+
+  .slick-initialized .slick-slide {
+    display: block;
+    padding: 50px;
+    font-size: 24px;
+    background: #ffffffe3;
+    color: #002284;
+    text-transform: uppercase;
+    text-align: center;
+    height: 35vh;
+    word-break: break-word;
+}
+
+.music-carousel {
+    width: 95vw;
+    margin: 20px auto;
+}
+
+.add-time:hover {
+    cursor: pointer;
+    background: #E40280 !important;
+    color: #FFF;
+}
+
+.control-section a:hover {
+    cursor: pointer;
+    color: #E40280 !important;
+}
+
+
+.add-time a:hover {
+    cursor: pointer;
+    background: #E40280 !important;
+    color: #FFF !important;
+}
+
+.ksp {
+    -webkit-animation: breathing 2s ease-out infinite normal;
+    animation: breathing 2s ease-out infinite normal;
+    }
+
+
+@-webkit-keyframes breathing {
+    0% {
+        -webkit-transform: scale(0.9);
+        -ms-transform: scale(0.9);
+        transform: scale(0.9);
+      }
+    
+      25% {
+        -webkit-transform: scale(1.9);
+        -ms-transform: scale(1.9);
+        transform: scale(1.9);
+      }
+    
+      60% {
+        -webkit-transform: scale(0.7);
+        -ms-transform: scale(0.7);
+        transform: scale(0.7);
+      }
+    
+      100% {
+        -webkit-transform: scale(1.4);
+        -ms-transform: scale(1.4);
+        transform: scale(1.4);
+      }
+}
+
+@keyframes breathing {
+  0% {
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+
+  25% {
+    -webkit-transform: scale(1.9);
+    -ms-transform: scale(1.9);
+    transform: scale(1.9);
+  }
+
+  60% {
+    -webkit-transform: scale(0.7);
+    -ms-transform: scale(0.7);
+    transform: scale(0.7);
+  }
+
+  100% {
+    -webkit-transform: scale(1.4);
+    -ms-transform: scale(1.4);
+    transform: scale(1.4);
+  }
+}
+
+
+@media only screen and (max-width: 600px) {
+    .control-wrapper {
+        height: 25vh;
+    }
+
+    .music-carousel {
+        width: 74vw;
+        margin: 20px auto;
+    }
+}
