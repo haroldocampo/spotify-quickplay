@@ -8,12 +8,13 @@ var spotifyClientId = '2fa6370449d5470f8b09881d9b455dc7';
 var spotifyClientSecret = 'c4d8d7a7564b4192ab72392787540526';
 var scopes = 'user-read-private user-read-email user-read-birthdate user-top-read playlist-read-private playlist-read-collaborative';
 var authstring = 'Basic ' + Buffer.from((spotifyClientId + ':' + spotifyClientSecret)).toString('base64');
+const current_uri = 'http://localhost:9000';
 
 // credentials are optional
 var spotifyApi = new spotify({
     clientId: spotifyClientId,
     clientSecret: spotifyClientSecret,
-    redirectUri: 'http://localhost:9000'
+    redirectUri: current_uri
 });
 app.use(express.static(__dirname + '/web'));
 
@@ -31,7 +32,7 @@ app.get('/login', function (req, res) {
         '?response_type=code' +
         '&client_id=' + spotifyClientId +
         (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
-        '&redirect_uri=' + encodeURIComponent('http://localhost:9000/getauthtoken'));
+        '&redirect_uri=' + encodeURIComponent(current_uri+ '/getauthtoken'));
 });
 
 app.get('/getauthtoken', function (req, res) {
@@ -40,7 +41,7 @@ app.get('/getauthtoken', function (req, res) {
         "url": "https://accounts.spotify.com/api/token",
         "body": 'grant_type=authorization_code' +
             '&code=' + req.query.code +
-            '&redirect_uri=' + encodeURIComponent('http://localhost:9000/getauthtoken')
+            '&redirect_uri=' + encodeURIComponent(current_uri + '/getauthtoken')
     }, (error, response, body) => {
         var bod = JSON.parse(body);
         var token = bod.access_token;
@@ -71,6 +72,6 @@ app.get('/top50', (req, res) => {
         });
 });
 
-app.listen(9000, () => {
-    console.log('ABC');
+app.listen(80, () => {
+    console.log('Quickplay Started...');
 });
