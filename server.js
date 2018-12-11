@@ -10,6 +10,7 @@ var scopes = 'user-read-private user-read-email user-read-birthdate user-top-rea
 var authstring = 'Basic ' + Buffer.from((spotifyClientId + ':' + spotifyClientSecret)).toString('base64');
 const current_uri = 'quickplay.heroku.com';
 const PORT = process.env.PORT || 3000;
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 // credentials are optional
 var spotifyApi = new spotify({
