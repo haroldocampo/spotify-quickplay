@@ -1,0 +1,113 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="bower_components/components-font-awesome/css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="scripts/slick/slick.css">
+        <style>
+        </style>
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body data-ng-app="InmusikApp">
+    <div data-ng-controller="MainController" class="player container">
+      <div class="row">
+          <div class="col-12">
+              <div class="logo-section">
+                  <img class="logo logo-col" src="assets/logo-light.png">
+              </div>
+            </div>
+      </div>
+      <!-- Example row of columns -->
+      <div class="row" >
+        <!-- <div class="col-6">
+          <div class="search-section">
+            <input type="text" class="form-control" />
+          </div>
+          <div class="list-section">
+            <h4>Up Next</h4>
+              <table class="table table-responsive">
+                  <tr>
+                      <th><Play/Pause</th>
+                      <th>Title</th>
+                      <th>Artist</th>
+                  </tr>
+                  <tr>
+                      <td><a class="fa fa-play"></a></td>
+                      <td>Song</td>
+                      <td>Artist</td>
+                  </tr>
+                  <tr>
+                      <td><a class="fa fa-play"></a></td>
+                      <td>Song</td>
+                      <td>Artist</td>
+                  </tr>
+                  <tr>
+                      <td><a class="fa fa-play"></a></td>
+                      <td>Song</td>
+                      <td>Artist</td>
+                  </tr>
+                  <tr>
+                      <td><a class="fa fa-play"></a></td>
+                      <td>Song</td>
+                      <td>Artist</td>
+                  </tr>
+                  <tr>
+                      <td><a class="fa fa-play"></a></td>
+                      <td>Song</td>
+                      <td>Artist</td>
+                  </tr>
+              </table>
+          </div>
+        </div> -->
+        <div class="col-12" data-ng-controller="CarouselController">
+            <!-- <audio id="music-player">
+              <p>If you are reading this, it is because your browser does not support the audio element.     </p>
+            </audio> -->
+            <div class="music-carousel">
+                <div data-ng-repeat="t in tracks">{[t.name]}</div>
+            </div>
+        </div>
+      </div>
+      <div data-ng-controller="ControlController" class="row control-wrapper" id="controlScope">
+        <div class="col-md-4 col-sm-12">
+          <div class="control-section">
+              <!-- <a class="fa fa-step-backward"></a> -->
+              <a class="fa fa-times-circle decision-btn" data-ng-click="next()"></a>
+              <a class="fa fa-play" data-ng-hide="hidePlayPause"  href="javascript:void(0);" data-ng-if="player.paused" data-ng-click="play()"></a>
+              <a class="fa fa-pause" data-ng-hide="hidePlayPause" href="javascript:void(0);" data-ng-if="!player.paused" data-ng-click="pause()"></a>
+              <a class="fa fa-check-circle decision-btn" data-ng-click="next()"></a>
+              <span class="add-time" data-ng-click="addPlayduration(23)" data-ng-show="!addTimeDisabled">
+                <a><i class="fa fa-stopwatch add-time-btn"></i> 30</a>
+              </span>
+              <!-- <a class="fa fa-step-forward"></a> -->
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <div class="current-section">
+              <h5>{[ currentSong.name ]}</h5>
+              <h6>{[ currentSong.artist ]}</h6>
+          </div>
+          <div class="progress-bar-container">
+            <div class="progress-pointer"></div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          
+        </div>
+      </div>
+    </div> <!-- /container -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="scripts/slick/slick.min.js"></script>
+    <script src="scripts/app.js"></script>
+    </body>
+</html>
