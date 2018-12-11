@@ -54,6 +54,7 @@ app.controller('ControlController', function ($rootScope, $scope, $http, $filter
         $http.get('/top50').then(function (response) {
             for (var i in response.data.items) {
                 var item = response.data.items[i].track;
+                if (item.preview_url == null) continue; 
                 $scope.tracks.push({ name: item.name, artist: item.artists[0].name, url: item.preview_url, isSaved: false, isPlayed: false }, );
             }
             $scope.tracks = $scope.shuffle($scope.tracks);
