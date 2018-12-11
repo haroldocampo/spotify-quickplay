@@ -131,11 +131,11 @@ body {
     display: block;
     padding: 50px;
     font-size: 24px;
-    background: #ffffffe3;
+    background: #ffffff12;
     color: #002284;
     text-transform: uppercase;
     text-align: center;
-    height: 35vh;
+    /*height: 35vh;*/
     word-break: break-word;
 }
 
@@ -160,6 +160,11 @@ body {
     cursor: pointer;
     background: #E40280 !important;
     color: #FFF !important;
+}
+
+.album-art-image {
+    text-align: center;
+    display: inline-block!important;
 }
 
 .ksp {
@@ -229,5 +234,9 @@ body {
     .music-carousel {
         width: 74vw;
         margin: 20px auto;
+    }
+
+    .album-art-image {
+        width: 100%;
     }
 }

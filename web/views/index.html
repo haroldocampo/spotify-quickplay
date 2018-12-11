@@ -72,7 +72,7 @@
               <p>If you are reading this, it is because your browser does not support the audio element.     </p>
             </audio> -->
             <div class="music-carousel">
-                <div data-ng-repeat="t in tracks">{[t.name]}</div>
+                <div data-ng-repeat="t in tracks"><img class="album-art-image" data-ng-src="{[ t.album_art_url ]}"/></div>
             </div>
         </div>
       </div>

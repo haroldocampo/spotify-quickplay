@@ -54,8 +54,8 @@ app.controller('ControlController', function ($rootScope, $scope, $http, $filter
         $http.get('/top50').then(function (response) {
             for (var i in response.data.items) {
                 var item = response.data.items[i].track;
-                if (item.preview_url == null) continue; 
-                $scope.tracks.push({ name: item.name, artist: item.artists[0].name, url: item.preview_url, isSaved: false, isPlayed: false }, );
+                if (item.preview_url == null) continue;
+                $scope.tracks.push({ name: item.name, artist: item.artists[0].name, url: item.preview_url, album_art_url: item.album.images[0].url, isSaved: false, isPlayed: false }, );
             }
             $scope.tracks = $scope.shuffle($scope.tracks);
             $rootScope.$broadcast('controlInitDone');
@@ -146,19 +146,22 @@ app.controller('ControlController', function ($rootScope, $scope, $http, $filter
     };
 
     $scope.next = function () {
-        $scope.queueCount++;
-        $scope.init();
-        $scope.onplaying = false;
-        $scope.play();
-        $('.music-carousel').slick('slickGoTo', $scope.queueCount);
+        $timeout(function () {
+            $scope.queueCount++;
+            $scope.init();
+            $scope.onplaying = false;
+            $scope.play();
+            $('.music-carousel').slick('slickGoTo', $scope.queueCount);
+        });
     };
 
     $scope.playIndex = function (index) {
-        $scope.queueCount = index;
-        $scope.init();
-        $scope.onplaying = false;
-        $scope.play();
-        //$scope.$digest();
+        $timeout(function () {
+            $scope.queueCount = index;
+            $scope.init();
+            $scope.onplaying = false;
+            $scope.play();
+        });
     };
 
     $scope.loadTracks();
