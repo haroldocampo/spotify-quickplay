@@ -156,6 +156,7 @@ app.controller('ControlController', function ($rootScope, $scope, $http, $filter
     $scope.playIndex = function (index) {
         $scope.queueCount = index;
         $scope.init();
+        $scope.onplaying = false;
         $scope.play();
         //$scope.$digest();
     };
