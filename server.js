@@ -8,10 +8,10 @@ var spotifyClientId = '2fa6370449d5470f8b09881d9b455dc7';
 var spotifyClientSecret = 'c4d8d7a7564b4192ab72392787540526';
 var scopes = 'user-read-private user-read-email user-read-birthdate user-top-read playlist-read-private playlist-read-collaborative';
 var authstring = 'Basic ' + Buffer.from((spotifyClientId + ':' + spotifyClientSecret)).toString('base64');
-// const current_uri = 'http://quickplay.herokuapp.com';
-// const PORT = process.env.PORT || 3000;
-const current_uri = 'http://localhost:9000';
-const PORT = 9000;
+const current_uri = 'http://quickplay.herokuapp.com';
+const PORT = process.env.PORT || 3000;
+// const current_uri = 'http://localhost:9000';
+// const PORT = 9000;
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 // credentials are optional
