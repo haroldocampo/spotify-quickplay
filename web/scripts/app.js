@@ -51,15 +51,29 @@ app.controller('ControlController', function ($rootScope, $scope, $http, $filter
     };
 
     $scope.loadTracks = function () {
+        $http.get('/createplaylist').then(function(response){
+            console.log('Playlist Initiated!');
+        });
+
         $http.get('/top50').then(function (response) {
             for (var i in response.data.items) {
                 var item = response.data.items[i].track;
                 if (item.preview_url == null) continue;
                 $scope.tracks.push({ name: item.name, artist: item.artists[0].name, url: item.preview_url, album_art_url: item.album.images[0].url, isSaved: false, isPlayed: false }, );
             }
-            $scope.tracks = $scope.shuffle($scope.tracks);
-            $rootScope.$broadcast('controlInitDone');
-            $scope.init();
+            $http.get('/throwback').then(function (response) {
+                for (var i in response.data.items) {
+                    var item = response.data.items[i].track;
+                    if (item.preview_url == null) continue;
+                    $scope.tracks.push({ name: item.name, artist: item.artists[0].name, url: item.preview_url, album_art_url: item.album.images[0].url, isSaved: false, isPlayed: false }, );
+                }
+
+                $scope.tracks = $scope.shuffle($scope.tracks);
+                $rootScope.$broadcast('controlInitDone');
+                $scope.init();
+            }, function (err) {
+                console.log('Something went wrong!', err);
+            });
         }, function (err) {
             console.log('Something went wrong!', err);
         });
