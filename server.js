@@ -122,6 +122,7 @@ app.get('/createplaylist', (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
+    spotifyApi.resetCredentials();
     spotifyApi = null;
     res.json(true);
 });
