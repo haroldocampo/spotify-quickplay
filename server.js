@@ -16,14 +16,14 @@ const PORT = process.env.PORT || 3000;
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 // credentials are optional
-var spotifyApi = new spotify({
-    clientId: spotifyClientId,
-    clientSecret: spotifyClientSecret,
-    redirectUri: current_uri
-});
+var spotifyApi = null;
 app.use(express.static(__dirname + '/web'));
 
 app.get('/', (req, res) => {
+    if(spotifyApi == null){
+        res.redirect('/login');
+    }
+
     if (!spotifyApi.getAccessToken()) {
         res.redirect('/login');
     }
@@ -32,6 +32,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/login', function (req, res) {
+    spotifyApi = new spotify({
+        clientId: spotifyClientId,
+        clientSecret: spotifyClientSecret,
+        redirectUri: current_uri
+    });
 
     res.redirect('https://accounts.spotify.com/authorize' +
         '?response_type=code' +
@@ -116,7 +121,10 @@ app.get('/createplaylist', (req, res) => {
         });
 });
 
-
+app.get('/logout', (req, res) => {
+    spotifyApi = null;
+    res.json(true);
+});
 
 
 app.listen(PORT, () => {

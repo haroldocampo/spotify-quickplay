@@ -71,6 +71,8 @@ app.controller('ControlController', function ($rootScope, $scope, $http, $filter
                 $scope.tracks = $scope.shuffle($scope.tracks);
                 $rootScope.$broadcast('controlInitDone');
                 $scope.init();
+                $scope.endSession();
+                
             }, function (err) {
                 console.log('Something went wrong!', err);
             });
@@ -78,6 +80,12 @@ app.controller('ControlController', function ($rootScope, $scope, $http, $filter
             console.log('Something went wrong!', err);
         });
 
+    };
+
+    $scope.endSession = function(){
+        $http.get('/logout').then(function(response){
+            console.log('Session Ended!');
+        });
     };
 
     $scope.shuffle = function (array) {
