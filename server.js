@@ -1,5 +1,6 @@
 var express = require('express');
 var request = require('request');
+var bodyParser = require('body-parser')
 var fs = require('fs');
 var http = require('http');
 const app = express();
@@ -16,16 +17,26 @@ const PORT = process.env.PORT || 3000;
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 // credentials are optional
-var spotifyApi = null;
+var spotifyApi = new spotify({
+    clientId: spotifyClientId,
+    clientSecret: spotifyClientSecret,
+    redirectUri: current_uri
+});
+
+var spotifySession = [];
+
 app.use(express.static(__dirname + '/web'));
+app.use(bodyParser());
 
 app.get('/', (req, res) => {
     if(spotifyApi == null){
         res.redirect('/login');
+        return;
     }
 
     if (!spotifyApi.getAccessToken()) {
-        res.redirect('/login');
+         res.redirect('/login');
+         return;
     }
 
     res.sendFile(__dirname + '/web/views/index.html');
@@ -105,21 +116,51 @@ app.get('/createplaylist', (req, res) => {
                             .then(function (data) {
                                 qplaylistId = data.body.id;
                                 console.log("Created Playlist!");
+                                res.json({playlistId: qplaylistId, userId: userId});
                             }, function (err) {
                                 console.log('Something went wrong!', err);
                             });
                     } else {
                         qplaylistId = qplaylists[0].id;
+                        res.json({playlistId: qplaylistId, userId: userId});
                     }
+                    
+                    console.log('Playlist Loaded!');
                     //res.json(data.body);
                 }, function (err) {
+                    res.json(false);
                     console.log('Something went wrong!', err);
                 });
 
         }, function (err) {
+            res.json(false);
             console.log('Something went wrong!', err);
         });
 });
+
+app.get('/startsession', (req, res) => {
+    spotifySession[req.query.userId] = {api: spotifyApi};
+    //spotifyApi.resetCredentials();
+    spotifyApi = null;
+    res.json(true);
+});
+
+app.post('/addtoplaylist', (req, res) => {
+    if(!spotifySession[req.body.userId]){
+        console.log('No Session Detected. Doing nothing for now...');
+        return;
+    }
+    spotifySession[req.body.userId].api.addTracksToPlaylist(req.body.playlistId, req.body.trackUri)
+    .then(function (data) {
+        console.log('Added track to playlist!');
+        res.json(true);
+    }, function (err) {
+        console.log('Something went wrong!', err);
+        res.json(err);
+    });
+
+});
+
 
 app.get('/logout', (req, res) => {
     spotifyApi.resetCredentials();

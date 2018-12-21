@@ -78,12 +78,12 @@
       </div>
       <div data-ng-controller="ControlController" class="row control-wrapper" id="controlScope">
         <div class="col-md-4 col-sm-12">
-          <div class="control-section">
+          <div class="control-section" data-ng-show="loaded">
               <!-- <a class="fa fa-step-backward"></a> -->
               <a class="fa fa-times-circle decision-btn" data-ng-click="next()"></a>
               <a class="fa fa-play" data-ng-hide="hidePlayPause"  href="javascript:void(0);" data-ng-if="player.paused" data-ng-click="play()"></a>
               <a class="fa fa-pause" data-ng-hide="hidePlayPause" href="javascript:void(0);" data-ng-if="!player.paused" data-ng-click="pause()"></a>
-              <a class="fa fa-check-circle decision-btn" data-ng-click="next()"></a>
+              <a class="fa fa-check-circle decision-btn" data-ng-click="next(true)"></a>
               <span class="add-time" data-ng-click="addPlayduration(23)" data-ng-show="!addTimeDisabled">
                 <a><i class="fa fa-stopwatch add-time-btn"></i> 30</a>
               </span>

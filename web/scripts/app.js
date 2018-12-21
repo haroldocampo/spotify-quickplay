@@ -24,6 +24,7 @@ app.controller('ControlController', function ($rootScope, $scope, $http, $filter
     $scope.playDuration = $scope.defaultPlayduration; // seconds
     $scope.startTime = 0;
     $scope.tracks = [];
+    $scope.savedTracks = [];
 
     // Initializing values
     $scope.onplaying = false;
@@ -51,28 +52,31 @@ app.controller('ControlController', function ($rootScope, $scope, $http, $filter
     };
 
     $scope.loadTracks = function () {
-        $http.get('/createplaylist').then(function(response){
+        $http.get('/createplaylist').then(function (response) {
             console.log('Playlist Initiated!');
+            $scope.playlistId = response.data.playlistId;
+            $scope.userId = response.data.userId;
+            $scope.loaded = true;
         });
 
         $http.get('/top50').then(function (response) {
             for (var i in response.data.items) {
                 var item = response.data.items[i].track;
                 if (item.preview_url == null) continue;
-                $scope.tracks.push({ name: item.name, artist: item.artists[0].name, url: item.preview_url, album_art_url: item.album.images[0].url, isSaved: false, isPlayed: false }, );
+                $scope.tracks.push({ name: item.name, artist: item.artists[0].name, url: item.preview_url, album_art_url: item.album.images[0].url, uri: item.uri, isSaved: false, isPlayed: false }, );
             }
             $http.get('/throwback').then(function (response) {
                 for (var i in response.data.items) {
                     var item = response.data.items[i].track;
                     if (item.preview_url == null) continue;
-                    $scope.tracks.push({ name: item.name, artist: item.artists[0].name, url: item.preview_url, album_art_url: item.album.images[0].url, isSaved: false, isPlayed: false }, );
+                    $scope.tracks.push({ name: item.name, artist: item.artists[0].name, url: item.preview_url, album_art_url: item.album.images[0].url, uri: item.uri, isSaved: false, isPlayed: false }, );
                 }
 
                 $scope.tracks = $scope.shuffle($scope.tracks);
                 $rootScope.$broadcast('controlInitDone');
                 $scope.init();
-                $scope.endSession();
-                
+                $scope.startSession();
+
             }, function (err) {
                 console.log('Something went wrong!', err);
             });
@@ -82,9 +86,11 @@ app.controller('ControlController', function ($rootScope, $scope, $http, $filter
 
     };
 
-    $scope.endSession = function(){
-        $http.get('/logout').then(function(response){
-            console.log('Session Ended!');
+    $scope.startSession = function () {
+        $http.get('/startsession', {
+            params: { userId: $scope.userId, playlistId: $scope.playlistId }
+        }).then(function (response) {
+            console.log('Session for user ID: ' + $scope.userId + ' Started!');
         });
     };
 
@@ -167,13 +173,26 @@ app.controller('ControlController', function ($rootScope, $scope, $http, $filter
         }
     };
 
-    $scope.next = function () {
+    $scope.next = function (isSaved = false) {
         $timeout(function () {
+
+            if (isSaved) {
+                $scope.saveTrack($scope.tracks[$scope.queueCount]);
+            }
+
             $scope.queueCount++;
             $scope.init();
             $scope.onplaying = false;
             $scope.play();
             $('.music-carousel').slick('slickGoTo', $scope.queueCount);
+        });
+    };
+
+    $scope.saveTrack = function (track) {
+        $scope.savedTracks = [];
+        $scope.savedTracks.push(track.uri);
+        $http.post('/addtoplaylist', {userId: $scope.userId, playlistId: $scope.playlistId, trackUri: $scope.savedTracks}).then(function (response) {
+            console.log('Track Saved!');
         });
     };
 
